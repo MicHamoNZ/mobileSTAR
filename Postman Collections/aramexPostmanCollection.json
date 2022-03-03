@@ -1214,7 +1214,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "/*\r\n//  Service Type - Standard Alcholhol\r\n//      Service Attributes - Signature Required\r\n//\t\t\t\t\t\t   - Capture Date of Birth\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{alcoholDeliveryServiceTypeId}}\r\n}"
+              "raw": "/*\r\n//  Service Type - Standard Alcholhol\r\n//      Service Attributes - Signature Required\r\n//\t\t\t\t\t\t   - Capture Date of Birth\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{alcoholSignatureRequiredServiceTypeId}}\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
