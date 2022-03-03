@@ -1371,9 +1371,11 @@
           "script": {
             "id": "4abdad82-cfaa-4f96-8de3-949d944abfe0",
             "exec": [
-              "pm.test(\"Successful POST request\", function () {\r",
+              "if (pm.test(\"Successful POST request\", function () {\r",
               "\tpm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
-              "}"
+              "})) {\r",
+              "\tpm.environment.unset(\"addresses\");\r",
+              "};"
             ],
             "type": "text/javascript"
           }
