@@ -10,7 +10,7 @@
       "item": [
         {
           "name": "Assign Job to Route",
-          "_postman_id": "bb3d1e19-e3fe-40d0-ac99-c7222dbd3bb6",
+          "id": "bb3d1e19-e3fe-40d0-ac99-c7222dbd3bb6",
           "protocolProfileBehavior": {
             "disabledSystemHeaders": {
               "accept": true
@@ -33,10 +33,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"Id\": \"{{jobId}}\",\r\n  \"LocationId\": 971\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n  \"Id\": \"{{jobId}}\",\r\n  \"LocationId\": 971\r\n}"
             },
             "url": "{{inboundAPIurl}}/AssignedJobs"
           },
@@ -44,7 +41,7 @@
         },
         {
           "name": "Sets a Service Type against a Package in a Job",
-          "_postman_id": "e2fc2b35-21fc-40e7-b760-8479d1c863f7",
+          "id": "e2fc2b35-21fc-40e7-b760-8479d1c863f7",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -67,17 +64,14 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "/*\r\n//  Service Type - Alcohol Delivery\r\n//      Service Attributes - Signature Required\r\n                           - Package can be left in a safe place (Requires Custom Data)\r\n//                         - Capture Date of Birth\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{alcoholDeliveryServiceTypeId}},\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4,\r\n\t\t\t\"AttributeData\": \"ATL\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "/*\r\n//  Service Type - Alcohol Delivery\r\n//      Service Attributes - Signature Required\r\n                           - Package can be left in a safe place (Requires Custom Data)\r\n//                         - Capture Date of Birth\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{alcoholDeliveryServiceTypeId}},\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4,\r\n\t\t\t\"AttributeData\": \"ATL\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
           "response": []
         }
       ],
-      "_postman_id": "69de68bf-706b-4270-be39-801c5002b9d0"
+      "id": "69de68bf-706b-4270-be39-801c5002b9d0"
     },
     {
       "name": "Delivery test",
@@ -112,7 +106,7 @@
               }
             }
           ],
-          "_postman_id": "78256800-d896-4be8-a529-f14ae26c9369",
+          "id": "78256800-d896-4be8-a529-f14ae26c9369",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -136,10 +130,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"Username\": \"{{username}}\",\r\n\t\"Password\": \"{{password}}\"\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"Username\": \"{{username}}\",\r\n\t\"Password\": \"{{password}}\"\r\n}"
             },
             "url": "{{inboundAPIurl}}/Authentication"
           },
@@ -209,7 +200,7 @@
               }
             }
           ],
-          "_postman_id": "c998036b-53f0-405a-a90b-2d0f709a25fc",
+          "id": "c998036b-53f0-405a-a90b-2d0f709a25fc",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -263,7 +254,7 @@
               }
             }
           ],
-          "_postman_id": "e8853c74-9bb2-4904-9c56-177ebe5895a5",
+          "id": "e8853c74-9bb2-4904-9c56-177ebe5895a5",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -364,10 +355,7 @@
                   "value": "{{$guid}}",
                   "type": "text"
                 }
-              ],
-              "options": {
-                "urlencoded": {}
-              }
+              ]
             },
             "url": "{{smartphoneAPIurl}}/api/auth/token"
           },
@@ -375,7 +363,7 @@
         },
         {
           "name": "Get job for package",
-          "_postman_id": "38c6a6b4-40e3-4ba3-9b64-68d809f84f65",
+          "id": "38c6a6b4-40e3-4ba3-9b64-68d809f84f65",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -446,7 +434,7 @@
               }
             }
           ],
-          "_postman_id": "f8c691ee-86ca-4410-83a4-5f90dc167eda",
+          "id": "f8c691ee-86ca-4410-83a4-5f90dc167eda",
           "protocolProfileBehavior": {
             "disabledSystemHeaders": {
               "accept": true,
@@ -477,10 +465,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ActionId\": \"{{$guid}}\",\r\n\t\"ProcessOutcomeId\": 31,\r\n\t\"Scans\": [\r\n\t\t{\r\n\t\t\t\"PackageBarcode\": \"{{packageExternalId}}\",\r\n\t\t\t\"Timestamp\": \"{{$isoTimestamp}}\",\r\n\t\t\t\"ScanType\": 2\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ActionId\": \"{{$guid}}\",\r\n\t\"ProcessOutcomeId\": 31,\r\n\t\"Scans\": [\r\n\t\t{\r\n\t\t\t\"PackageBarcode\": \"{{packageExternalId}}\",\r\n\t\t\t\"Timestamp\": \"{{$isoTimestamp}}\",\r\n\t\t\t\"ScanType\": 2\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{smartphoneAPIurl}}/api/packagescans"
           },
@@ -511,7 +496,7 @@
               }
             }
           ],
-          "_postman_id": "7ec60867-a4ec-4119-a682-763660fe8a33",
+          "id": "7ec60867-a4ec-4119-a682-763660fe8a33",
           "protocolProfileBehavior": {
             "disabledSystemHeaders": {
               "accept": true,
@@ -542,10 +527,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ActionId\": \"{{$guid}}\",\r\n\t\"ProcessOutcomeId\": 38,\r\n\t\"Scans\": [\r\n\t\t{\r\n\t\t\t\"PackageBarcode\": \"{{packageExternalId}}\",\r\n\t\t\t\"Timestamp\": \"{{$isoTimestamp}}\",\r\n\t\t\t\"ScanType\": 1,\r\n\t\t\t\"ImpliedScan\": true\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ActionId\": \"{{$guid}}\",\r\n\t\"ProcessOutcomeId\": 38,\r\n\t\"Scans\": [\r\n\t\t{\r\n\t\t\t\"PackageBarcode\": \"{{packageExternalId}}\",\r\n\t\t\t\"Timestamp\": \"{{$isoTimestamp}}\",\r\n\t\t\t\"ScanType\": 1,\r\n\t\t\t\"ImpliedScan\": true\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{smartphoneAPIurl}}/api/packagescans"
           },
@@ -576,7 +558,7 @@
               }
             }
           ],
-          "_postman_id": "2cfca43d-5b10-4e06-a128-5d41bacf88a3",
+          "id": "2cfca43d-5b10-4e06-a128-5d41bacf88a3",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -674,17 +656,14 @@
                   "value": "{{$guid}}",
                   "type": "text"
                 }
-              ],
-              "options": {
-                "urlencoded": {}
-              }
+              ]
             },
             "url": "{{smartphoneAPIurl}}/api/auth/token"
           },
           "response": []
         }
       ],
-      "_postman_id": "284ff453-e5a1-428d-9569-f2f0f7ee5043",
+      "id": "284ff453-e5a1-428d-9569-f2f0f7ee5043",
       "auth": {
         "type": "noauth"
       },
@@ -716,7 +695,7 @@
       "item": [
         {
           "name": "Alternative Options",
-          "_postman_id": "c7f30ffd-98ad-400d-9f3b-76481e90d1ac",
+          "id": "c7f30ffd-98ad-400d-9f3b-76481e90d1ac",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -739,10 +718,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 2, //Alternative Options\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2, //DisallowCarded RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4, //AllowSafePlace RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"Back Door\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 7,\t//AllowNeighbour RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"\"\t\t\t//GUID for neighbour address\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 8, //DeliveryToLocation RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"Card to Location\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 13, //PhotoRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t//Aramex Custom Service Attributes\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2000, //AmazonCounter RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2001, //AmazonLocker RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 2, //Alternative Options\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2, //DisallowCarded RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4, //AllowSafePlace RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"Back Door\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 7,\t//AllowNeighbour RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"\"\t\t\t//GUID for neighbour address\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 8, //DeliveryToLocation RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"Card to Location\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 13, //PhotoRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t//Aramex Custom Service Attributes\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2000, //AmazonCounter RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2001, //AmazonLocker RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -750,7 +726,7 @@
         },
         {
           "name": "IE-NON-POD",
-          "_postman_id": "a3f80355-e200-492f-9d43-39b8818c598d",
+          "id": "a3f80355-e200-492f-9d43-39b8818c598d",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -773,10 +749,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 6, //IE-NON-POD\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4, //AllowSafePlace RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"Back Door\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 7, //AllowNeighbour RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"\" //GUID for neighbour address\r\n\t\t},\r\n\t\t//Aramex Custom Service Attributes\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2000, //AmazonCounter RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2001, //AmazonLocker RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 6, //IE-NON-POD\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4, //AllowSafePlace RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"Back Door\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 7, //AllowNeighbour RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"\" //GUID for neighbour address\r\n\t\t},\r\n\t\t//Aramex Custom Service Attributes\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2000, //AmazonCounter RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2001, //AmazonLocker RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -784,7 +757,7 @@
         },
         {
           "name": "IE-Photo Required",
-          "_postman_id": "18b3cead-d66e-4a46-87c7-4b59ad09cc9f",
+          "id": "18b3cead-d66e-4a46-87c7-4b59ad09cc9f",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -807,10 +780,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 7, //IE-Photo Required\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 16, //PhotoAtSignature RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"Back Door\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 7, //IE-Photo Required\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 16, //PhotoAtSignature RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"Back Door\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -818,7 +788,7 @@
         },
         {
           "name": "IE-POD",
-          "_postman_id": "8a3fdcbe-ba17-4f40-ba26-99439a1d3910",
+          "id": "8a3fdcbe-ba17-4f40-ba26-99439a1d3910",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -841,10 +811,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 8, //IE-POD\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 8, //IE-POD\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -852,7 +819,7 @@
         },
         {
           "name": "PIN",
-          "_postman_id": "19dbc96a-c1b2-4d46-bf77-adcb92b64e0f",
+          "id": "19dbc96a-c1b2-4d46-bf77-adcb92b64e0f",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -875,10 +842,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 10,\t\t\t\t\t//PIN\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 3,\t\t//Secure RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"6828\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 10,\t\t\t\t\t//PIN\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 3,\t\t//Secure RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"6828\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -886,7 +850,7 @@
         },
         {
           "name": "POD -Neighbour",
-          "_postman_id": "2d5db691-9ff7-404e-ace9-77feb5dd85f2",
+          "id": "2d5db691-9ff7-404e-ace9-77feb5dd85f2",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -909,10 +873,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 11, //POD -Neighbour\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 7, //AllowNeighbour RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"{{$guid}}\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 11, //POD -Neighbour\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 7, //AllowNeighbour RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"{{$guid}}\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -920,7 +881,7 @@
         },
         {
           "name": "POD-Neighbour",
-          "_postman_id": "020cf304-6350-4815-b454-11256b9c7d8d",
+          "id": "020cf304-6350-4815-b454-11256b9c7d8d",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -943,10 +904,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 12, //POD -Neighbour\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 7, //AllowNeighbour RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"{{$guid}}\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 12, //POD -Neighbour\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 7, //AllowNeighbour RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"{{$guid}}\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -954,7 +912,7 @@
         },
         {
           "name": "SECURE PIN - ALCOHOL DELIVERY",
-          "_postman_id": "e577f6d6-09ea-44d3-b3bf-601c96723c48",
+          "id": "e577f6d6-09ea-44d3-b3bf-601c96723c48",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -977,10 +935,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 13,\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 5\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 3,\r\n\t\t\t\"AttributeData\": \"6828\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 13,\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 5\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 3,\r\n\t\t\t\"AttributeData\": \"6828\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -988,7 +943,7 @@
         },
         {
           "name": "SIGNATURE REQUIRED ALCOHOL DELIVERY",
-          "_postman_id": "6c65714c-c2d3-4f5e-9a23-ec00a66a9ee4",
+          "id": "6c65714c-c2d3-4f5e-9a23-ec00a66a9ee4",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -1011,10 +966,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 14,\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 20, //CaptureDateOfBirth RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 14,\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 20, //CaptureDateOfBirth RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -1022,7 +974,7 @@
         },
         {
           "name": "SIGPRESCAN",
-          "_postman_id": "d7759361-8273-4be2-a767-d8f4f6e30584",
+          "id": "d7759361-8273-4be2-a767-d8f4f6e30584",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -1045,10 +997,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 15, //SIGPRESCAN\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 17, //SignatureNotRequired RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 18, //PrescannedPackage RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 15, //SIGPRESCAN\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 17, //SignatureNotRequired RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 18, //PrescannedPackage RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -1056,7 +1005,7 @@
         },
         {
           "name": "SIG-REQ-LOC",
-          "_postman_id": "60adaccf-fb31-4e12-ad1f-df6edfe34e8d",
+          "id": "60adaccf-fb31-4e12-ad1f-df6edfe34e8d",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -1079,10 +1028,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 17, //SIG-REQ-LOC\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 8, //DeliveryToLocation RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 16, //PhotoAtSignature RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 17, //SIG-REQ-LOC\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 8, //DeliveryToLocation RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 16, //PhotoAtSignature RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -1090,7 +1036,7 @@
         },
         {
           "name": "SIGWAIVE",
-          "_postman_id": "7bb8a2b6-70bc-440d-aa44-0129d74ddcda",
+          "id": "7bb8a2b6-70bc-440d-aa44-0129d74ddcda",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -1113,10 +1059,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 17, //SIGWAIVE\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 17, //SignatureNotRequired RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 17, //SIGWAIVE\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 17, //SignatureNotRequired RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -1124,7 +1067,7 @@
         },
         {
           "name": "Standard Delivery",
-          "_postman_id": "d0de7046-3fc2-4e34-971a-62bfb97e1007",
+          "id": "d0de7046-3fc2-4e34-971a-62bfb97e1007",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -1147,10 +1090,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\t\"ServiceTypeId\": 19, //Standard Delivery\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4, //AllowSafePlace RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"BD\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 8, //DeliveryToLocation RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"Card to Location\"\r\n\t\t},\r\n\t\t//Aramex Custom Service Attributes\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2000, //AmazonCounter RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2001, //AmazonLocker RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "{\r\n\t\"ServiceTypeId\": 19, //Standard Delivery\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4, //AllowSafePlace RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"BD\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 8, //DeliveryToLocation RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"Card to Location\"\r\n\t\t},\r\n\t\t//Aramex Custom Service Attributes\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2000, //AmazonCounter RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2001, //AmazonLocker RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -1158,7 +1098,7 @@
         },
         {
           "name": "Sets a Service Type Alcohol Delivery",
-          "_postman_id": "4e69a290-c3ab-4f9a-9cf7-252614c1aaa9",
+          "id": "4e69a290-c3ab-4f9a-9cf7-252614c1aaa9",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -1181,10 +1121,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "/*\r\n//  Service Type - Alcohol Delivery\r\n//      Service Attributes - Signature Required\r\n                           - Package can be left in a safe place (Requires Custom Data)\r\n//                         - Capture Date of Birth\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{alcoholDeliveryServiceTypeId}},\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4,\r\n\t\t\t\"AttributeData\": \"ATL\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "/*\r\n//  Service Type - Alcohol Delivery\r\n//      Service Attributes - Signature Required\r\n                           - Package can be left in a safe place (Requires Custom Data)\r\n//                         - Capture Date of Birth\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{alcoholDeliveryServiceTypeId}},\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4,\r\n\t\t\t\"AttributeData\": \"ATL\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -1192,7 +1129,7 @@
         },
         {
           "name": "Sets a Service Type Authority to Leave",
-          "_postman_id": "8db8c69c-9343-4b44-ab3b-e081b886fc58",
+          "id": "8db8c69c-9343-4b44-ab3b-e081b886fc58",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -1215,10 +1152,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "/*\r\n//  Service Type - Authority to Leave\r\n//      Service Attributes - Package can be left in a safe place (Requires Custom Data)\r\n//                         - \r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{authorityToLeaveServiceTypeId}},\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4,\r\n\t\t\t\"AttributeData\": \"ATL\"\r\n\t\t}\r\n\t]\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "/*\r\n//  Service Type - Authority to Leave\r\n//      Service Attributes - Package can be left in a safe place (Requires Custom Data)\r\n//                         - \r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{authorityToLeaveServiceTypeId}},\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4,\r\n\t\t\t\"AttributeData\": \"ATL\"\r\n\t\t}\r\n\t]\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -1226,7 +1160,7 @@
         },
         {
           "name": "Sets a Service Type Signature Required",
-          "_postman_id": "570b2d2d-1df1-4c60-9475-8cf19f3b878d",
+          "id": "570b2d2d-1df1-4c60-9475-8cf19f3b878d",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -1249,10 +1183,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "/*\r\n//  Service Type - Signature Required\r\n//      Service Attributes - Signature Required\r\n//                         - \r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{signatureRequiredServiceTypeId}}\r\n}\r\n",
-              "options": {
-                "raw": {}
-              }
+              "raw": "/*\r\n//  Service Type - Signature Required\r\n//      Service Attributes - Signature Required\r\n//                         - \r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{signatureRequiredServiceTypeId}}\r\n}\r\n"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -1260,7 +1191,7 @@
         },
         {
           "name": "Sets a Service Type Standard Alcohol Authority To Leave",
-          "_postman_id": "b8cf111f-c29f-4abf-a271-156647a8b365",
+          "id": "b8cf111f-c29f-4abf-a271-156647a8b365",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -1283,10 +1214,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "/*\r\n//  Service Type - Standard Alcholhol\r\n//      Service Attributes - Signature Required\r\n//\t\t\t\t\t\t   - Capture Date of Birth\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{alcoholDeliveryServiceTypeId}}\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "/*\r\n//  Service Type - Standard Alcholhol\r\n//      Service Attributes - Signature Required\r\n//\t\t\t\t\t\t   - Capture Date of Birth\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{alcoholDeliveryServiceTypeId}}\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
@@ -1294,7 +1222,7 @@
         },
         {
           "name": "Sets a Service Type Amazon Counter",
-          "_postman_id": "95bdf145-d5d1-424c-86b8-060958818879",
+          "id": "95bdf145-d5d1-424c-86b8-060958818879",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
             "disabledSystemHeaders": {
@@ -1317,17 +1245,14 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "/*\r\n//  Service Type - Amazon Counter\r\n//      Service Attributes - Amazon Counter\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{amazonCounterServiceTypeId}}\r\n}",
-              "options": {
-                "raw": {}
-              }
+              "raw": "/*\r\n//  Service Type - Amazon Counter\r\n//      Service Attributes - Amazon Counter\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{amazonCounterServiceTypeId}}\r\n}"
             },
             "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
           },
           "response": []
         }
       ],
-      "_postman_id": "c20398be-ad2c-4124-a19c-26df3be0c598"
+      "id": "c20398be-ad2c-4124-a19c-26df3be0c598"
     },
     {
       "name": "Authenticate",
@@ -1391,7 +1316,7 @@
           }
         }
       ],
-      "_postman_id": "c23244ac-83b5-4372-9df5-61594b320994",
+      "id": "c23244ac-83b5-4372-9df5-61594b320994",
       "protocolProfileBehavior": {
         "disableBodyPruning": true,
         "disabledSystemHeaders": {
@@ -1446,13 +1371,15 @@
           "script": {
             "id": "4abdad82-cfaa-4f96-8de3-949d944abfe0",
             "exec": [
-              ""
+              "pm.test(\"Successful POST request\", function () {\r",
+              "\tpm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+              "}"
             ],
             "type": "text/javascript"
           }
         }
       ],
-      "_postman_id": "0d98c9db-5798-4486-9526-a9230913c7fd",
+      "id": "0d98c9db-5798-4486-9526-a9230913c7fd",
       "protocolProfileBehavior": {
         "disableBodyPruning": true,
         "disabledSystemHeaders": {
@@ -1476,10 +1403,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "",
-          "options": {
-            "raw": {}
-          }
+          "raw": ""
         },
         "url": "{{inboundAPIurl}}/Authentication/Logout"
       },
