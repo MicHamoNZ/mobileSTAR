@@ -1,0 +1,1489 @@
+{
+  "info": {
+    "_postman_id": "8e7d7478-bdb6-4c7f-a29e-cd152e8a2532",
+    "name": "Aramex",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Job",
+      "item": [
+        {
+          "name": "Assign Job to Route",
+          "_postman_id": "bb3d1e19-e3fe-40d0-ac99-c7222dbd3bb6",
+          "protocolProfileBehavior": {
+            "disabledSystemHeaders": {
+              "accept": true
+            },
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"Id\": \"{{jobId}}\",\r\n  \"LocationId\": 971\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/AssignedJobs"
+          },
+          "response": []
+        },
+        {
+          "name": "Sets a Service Type against a Package in a Job",
+          "_postman_id": "e2fc2b35-21fc-40e7-b760-8479d1c863f7",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "/*\r\n//  Service Type - Alcohol Delivery\r\n//      Service Attributes - Signature Required\r\n                           - Package can be left in a safe place (Requires Custom Data)\r\n//                         - Capture Date of Birth\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{alcoholDeliveryServiceTypeId}},\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4,\r\n\t\t\t\"AttributeData\": \"ATL\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        }
+      ],
+      "_postman_id": "69de68bf-706b-4270-be39-801c5002b9d0"
+    },
+    {
+      "name": "Delivery test",
+      "item": [
+        {
+          "name": "Inbound Authentication",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "0f3971bb-072b-4c02-b54e-bd4d3315c8b4",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "1f4a8e99-d987-4244-8108-c55319a8676f",
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {\r",
+                  "\tpm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Cookie BBAuthToken is present\", () => {\r",
+                  "\tpm.expect(pm.cookies.has(\"BBAuthToken\")).to.be.true;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "78256800-d896-4be8-a529-f14ae26c9369",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "content-type": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"Username\": \"{{username}}\",\r\n\t\"Password\": \"{{password}}\"\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Authentication"
+          },
+          "response": []
+        },
+        {
+          "name": "Delivery Job Batch",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "ad5f6ed6-ac40-452a-87c5-22db30417ac7",
+                "exec": [
+                  "var jsonData = pm.response.json();\r",
+                  "var regexId = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/;\r",
+                  "var regexBarCode = /^[a-z|A-Z]{3}[0-9]{10}$/;\r",
+                  "\r",
+                  "pm.test(\"Workorder Id is not null\", function () {\r",
+                  "\tpm.expect(jsonData.Successful[0].Id).not.eql(null);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Workorder Id is not 0\", function () {\r",
+                  "\tpm.expect(jsonData.Successful[0].Id).not.eql(0);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Workorder Id is a GUID\", function () {\r",
+                  "\tpm.expect(regexId.test(jsonData.Successful[0].Id));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"PackageId is not null\", function () {\r",
+                  "\tpm.expect(jsonData.Successful[0].Children[0].Id).not.eql(null);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"PackageId is not 0\", function () {\r",
+                  "\tpm.expect(jsonData.Successful[0].Children[0].Id).not.eql(0);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"PackageId is a GUID\", function () {\r",
+                  "\tpm.expect(regexId.test(jsonData.Successful[0].Children[0].Id));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Package ExternalId is regex ^[a-z|A-Z]{3}[0-9]{10}$\", function () {\r",
+                  "\tpm.expect(regexBarCode.test(jsonData.Successful[0].Children[0].ExternalId));\r",
+                  "});\r",
+                  "\r",
+                  "pm.environment.set(\"packageId\", jsonData.Successful[0].Children[0].Id);\r",
+                  "pm.environment.set(\"packageExternalId\", jsonData.Successful[0].Children[0].ExternalId);\r",
+                  "\r",
+                  "// console.log(\"WorkorderId:\", jsonData.Successful[0].Id);\r",
+                  "// console.log(\"WorkorderExternalId:\", jsonData.Successful[0].ExternalId);\r",
+                  "// console.log(\"PackageId\", jsonData.Successful[0].Children[0].Id);\r",
+                  "// console.log(\"PackageExternalId\", jsonData.Successful[0].Children[0].ExternalId);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "ebbf98d7-e5af-4df7-b92c-4a8d43885667",
+                "exec": [
+                  "pm.variables.set('timestamp', pm.variables.replaceIn(\"{{$timestamp}}\"));\r",
+                  "pm.variables.set(\"jobExternalId\",\"JOBDMH{{timestamp}}\");\r",
+                  "pm.variables.set(\"packageBarcode\",\"SNR{{timestamp}}\");"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "c998036b-53f0-405a-a90b-2d0f709a25fc",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\r\n\t{\r\n\t\t\"DepotExternalId\": \"{{depotExternalId}}\",\r\n\t\t\"ExternalId\": \"{{jobExternalId}}\",\r\n\t\t\"JobTypeExternalId\": \"{{delJobTypeExternalId}}\",\r\n\t\t\"PrimaryAddress\": {\r\n\t\t\t\"AddressLine1\": \"{{primaryAddrLine1}}\",\r\n\t\t\t\"AddressLine2\": \"{{primaryAddrLine2}}\",\r\n\t\t\t\"AddressLine3\": \"{{primaryAddrLine3}}\",\r\n\t\t\t\"AddressSpecialInstructions\": \"{{$randomBs}}\",\r\n\t\t\t\"AddressTypeId\": 1,\r\n\t\t\t\"City\": \"{{primaryAddrCity}}\",\r\n\t\t\t\"ContactName\": \"{{$randomFullName}}\",\r\n\t\t\t\"Country\": \"{{primaryAddrCountry}}\",\r\n\t\t\t\"Latitude\": {{primaryAddrLat}},\r\n\t\t\t\"Longitude\": {{primaryAddrLong}},\r\n\t\t\t\"PhoneNumber\": \"{{primaryAddrPhone}}\",\r\n\t\t\t\"PostCode\": \"{{primaryAddrPostcode}}\",\r\n\t\t\t\"State\": \"{{primaryAddrState}}\",\r\n\t\t\t\"EmailAddress\": \"{{primaryAddrEmail}}\",\r\n\t\t\t\"Company\": \"{{$randomCompanyName}} {{$randomCompanySuffix}}\"\r\n\t\t},\r\n\t\t\"Packages\": [\r\n\t\t\t{\r\n\t\t\t\t\"Barcode\": \"{{packageBarcode}}\"\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/batch"
+          },
+          "response": []
+        },
+        {
+          "name": "Smartphone Authentication",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "5ee514eb-bbc6-412f-a188-6fbe763eed0a",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "c376e808-f756-4a20-91ab-c658acee54dd",
+                "exec": [
+                  "var responseData = JSON.parse(responseBody);\r",
+                  "pm.globals.set(\"mobiletoken\", responseData.access_token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "e8853c74-9bb2-4904-9c56-177ebe5895a5",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "client_id",
+                  "value": "mobileclient",
+                  "type": "text"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "1YwHrhBINnFOkUKcwiImgyd8i3zrwYN5GLbn1MijfIM=",
+                  "type": "text"
+                },
+                {
+                  "key": "username",
+                  "value": "{{smartphoneUserName}}",
+                  "type": "text"
+                },
+                {
+                  "key": "deliveryconnectlocation",
+                  "value": "{{smartphoneLocation}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{smartphonePassword}}",
+                  "type": "text"
+                },
+                {
+                  "key": "serialnumber",
+                  "value": "7fed77e70b31912e",
+                  "type": "text"
+                },
+                {
+                  "key": "imei",
+                  "value": "1234567890",
+                  "type": "text"
+                },
+                {
+                  "key": "config",
+                  "value": "{{fluidConfigVersion}}",
+                  "type": "text"
+                },
+                {
+                  "key": "configname",
+                  "value": "{{provision}}",
+                  "type": "text"
+                },
+                {
+                  "key": "modelname",
+                  "value": "Fake Phone",
+                  "type": "text"
+                },
+                {
+                  "key": "dcappversion",
+                  "value": "{{mobileSTARAppVersion}}",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "passwordtype",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "platform",
+                  "value": "Droid",
+                  "type": "text"
+                },
+                {
+                  "key": "scope",
+                  "value": "http://localhost/demo",
+                  "type": "text"
+                },
+                {
+                  "key": "logonTime",
+                  "value": "{{$isoTimestamp}}",
+                  "type": "text"
+                },
+                {
+                  "key": "notificationToken",
+                  "value": "{{$guid}}",
+                  "type": "text"
+                }
+              ],
+              "options": {
+                "urlencoded": {}
+              }
+            },
+            "url": "{{smartphoneAPIurl}}/api/auth/token"
+          },
+          "response": []
+        },
+        {
+          "name": "Get job for package",
+          "_postman_id": "38c6a6b4-40e3-4ba3-9b64-68d809f84f65",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "{{mobiletoken}}"
+              }
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{smartphoneAPIurl}}/api/availablejobs?packageBarcode={{packageExternalId}}",
+              "host": [
+                "{{smartphoneAPIurl}}"
+              ],
+              "path": [
+                "api",
+                "availablejobs"
+              ],
+              "query": [
+                {
+                  "key": "packageBarcode",
+                  "value": "{{packageExternalId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "OFD Scan",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "22c6a573-8481-40c2-bb8d-2857348d2fcd",
+                "exec": [
+                  "pm.variables.set(\"timestamp\", pm.variables.replaceIn(\"{{$timestamp}}\"));\r",
+                  "pm.variables.set(\"packageBarcode\",\"SNR{{timestamp}}\");"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "98042cba-758b-4ec8-b7ee-e99bef179034",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "f8c691ee-86ca-4410-83a4-5f90dc167eda",
+          "protocolProfileBehavior": {
+            "disabledSystemHeaders": {
+              "accept": true,
+              "accept-encoding": true,
+              "content-type": true
+            },
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "{{mobiletoken}}"
+              }
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ActionId\": \"{{$guid}}\",\r\n\t\"ProcessOutcomeId\": 31,\r\n\t\"Scans\": [\r\n\t\t{\r\n\t\t\t\"PackageBarcode\": \"{{packageExternalId}}\",\r\n\t\t\t\"Timestamp\": \"{{$isoTimestamp}}\",\r\n\t\t\t\"ScanType\": 2\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{smartphoneAPIurl}}/api/packagescans"
+          },
+          "response": []
+        },
+        {
+          "name": "Group OFD",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "22c6a573-8481-40c2-bb8d-2857348d2fcd",
+                "exec": [
+                  "pm.variables.set(\"timestamp\", pm.variables.replaceIn(\"{{$timestamp}}\"));\r",
+                  "pm.variables.set(\"packageBarcode\",\"SNR{{timestamp}}\");"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "98042cba-758b-4ec8-b7ee-e99bef179034",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "7ec60867-a4ec-4119-a682-763660fe8a33",
+          "protocolProfileBehavior": {
+            "disabledSystemHeaders": {
+              "accept": true,
+              "accept-encoding": true,
+              "content-type": true
+            },
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "{{mobiletoken}}"
+              }
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ActionId\": \"{{$guid}}\",\r\n\t\"ProcessOutcomeId\": 38,\r\n\t\"Scans\": [\r\n\t\t{\r\n\t\t\t\"PackageBarcode\": \"{{packageExternalId}}\",\r\n\t\t\t\"Timestamp\": \"{{$isoTimestamp}}\",\r\n\t\t\t\"ScanType\": 1,\r\n\t\t\t\"ImpliedScan\": true\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{smartphoneAPIurl}}/api/packagescans"
+          },
+          "response": []
+        },
+        {
+          "name": "Smartphone Exit",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "5ee514eb-bbc6-412f-a188-6fbe763eed0a",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "c376e808-f756-4a20-91ab-c658acee54dd",
+                "exec": [
+                  "var responseData = JSON.parse(responseBody);\r",
+                  "pm.globals.set(\"mobiletoken\", responseData.access_token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "2cfca43d-5b10-4e06-a128-5d41bacf88a3",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "client_id",
+                  "value": "mobileclient",
+                  "type": "text"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "1YwHrhBINnFOkUKcwiImgyd8i3zrwYN5GLbn1MijfIM=",
+                  "type": "text"
+                },
+                {
+                  "key": "username",
+                  "value": "{{smartphoneUserName}}",
+                  "type": "text"
+                },
+                {
+                  "key": "deliveryconnectlocation",
+                  "value": "{{smartphoneLocation}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{smartphonePassword}}",
+                  "type": "text"
+                },
+                {
+                  "key": "serialnumber",
+                  "value": "7fed77e70b31912e",
+                  "type": "text"
+                },
+                {
+                  "key": "imei",
+                  "value": "1234567890",
+                  "type": "text"
+                },
+                {
+                  "key": "config",
+                  "value": "1.0.0",
+                  "type": "text"
+                },
+                {
+                  "key": "configname",
+                  "value": "FreightwaysV2",
+                  "type": "text"
+                },
+                {
+                  "key": "modelname",
+                  "value": "Fake Phone",
+                  "type": "text"
+                },
+                {
+                  "key": "dcappversion",
+                  "value": "1.50.0.0",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "passwordtype",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "platform",
+                  "value": "Droid",
+                  "type": "text"
+                },
+                {
+                  "key": "scope",
+                  "value": "http://localhost/demo",
+                  "type": "text"
+                },
+                {
+                  "key": "logonTime",
+                  "value": "{{$isoTimestamp}}",
+                  "type": "text"
+                },
+                {
+                  "key": "notificationToken",
+                  "value": "{{$guid}}",
+                  "type": "text"
+                }
+              ],
+              "options": {
+                "urlencoded": {}
+              }
+            },
+            "url": "{{smartphoneAPIurl}}/api/auth/token"
+          },
+          "response": []
+        }
+      ],
+      "_postman_id": "284ff453-e5a1-428d-9569-f2f0f7ee5043",
+      "auth": {
+        "type": "noauth"
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "c209ff08-73e0-428b-a742-3d70067d94d8",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "id": "2c82ffad-d1df-4e81-b4f4-ac668ad5447f",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Aramex Service Types",
+      "item": [
+        {
+          "name": "Alternative Options",
+          "_postman_id": "c7f30ffd-98ad-400d-9f3b-76481e90d1ac",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 2, //Alternative Options\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2, //DisallowCarded RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4, //AllowSafePlace RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"Back Door\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 7,\t//AllowNeighbour RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"\"\t\t\t//GUID for neighbour address\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 8, //DeliveryToLocation RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"Card to Location\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 13, //PhotoRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t//Aramex Custom Service Attributes\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2000, //AmazonCounter RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2001, //AmazonLocker RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "IE-NON-POD",
+          "_postman_id": "a3f80355-e200-492f-9d43-39b8818c598d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 6, //IE-NON-POD\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4, //AllowSafePlace RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"Back Door\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 7, //AllowNeighbour RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"\" //GUID for neighbour address\r\n\t\t},\r\n\t\t//Aramex Custom Service Attributes\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2000, //AmazonCounter RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2001, //AmazonLocker RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "IE-Photo Required",
+          "_postman_id": "18b3cead-d66e-4a46-87c7-4b59ad09cc9f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 7, //IE-Photo Required\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 16, //PhotoAtSignature RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"Back Door\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "IE-POD",
+          "_postman_id": "8a3fdcbe-ba17-4f40-ba26-99439a1d3910",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 8, //IE-POD\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "PIN",
+          "_postman_id": "19dbc96a-c1b2-4d46-bf77-adcb92b64e0f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 10,\t\t\t\t\t//PIN\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 3,\t\t//Secure RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"6828\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "POD -Neighbour",
+          "_postman_id": "2d5db691-9ff7-404e-ace9-77feb5dd85f2",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 11, //POD -Neighbour\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 7, //AllowNeighbour RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"{{$guid}}\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "POD-Neighbour",
+          "_postman_id": "020cf304-6350-4815-b454-11256b9c7d8d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 12, //POD -Neighbour\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 7, //AllowNeighbour RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"{{$guid}}\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "SECURE PIN - ALCOHOL DELIVERY",
+          "_postman_id": "e577f6d6-09ea-44d3-b3bf-601c96723c48",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 13,\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 5\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 3,\r\n\t\t\t\"AttributeData\": \"6828\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "SIGNATURE REQUIRED ALCOHOL DELIVERY",
+          "_postman_id": "6c65714c-c2d3-4f5e-9a23-ec00a66a9ee4",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 14,\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 20, //CaptureDateOfBirth RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "SIGPRESCAN",
+          "_postman_id": "d7759361-8273-4be2-a767-d8f4f6e30584",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 15, //SIGPRESCAN\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 17, //SignatureNotRequired RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 18, //PrescannedPackage RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "SIG-REQ-LOC",
+          "_postman_id": "60adaccf-fb31-4e12-ad1f-df6edfe34e8d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 17, //SIG-REQ-LOC\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 8, //DeliveryToLocation RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 16, //PhotoAtSignature RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "SIGWAIVE",
+          "_postman_id": "7bb8a2b6-70bc-440d-aa44-0129d74ddcda",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 17, //SIGWAIVE\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 17, //SignatureNotRequired RequiresCustomData=false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "Standard Delivery",
+          "_postman_id": "d0de7046-3fc2-4e34-971a-62bfb97e1007",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"ServiceTypeId\": 19, //Standard Delivery\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 1, //SignatureRequired RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4, //AllowSafePlace RequiresCustomData = true\r\n\t\t\t\"AttributeData\": \"BD\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 8, //DeliveryToLocation RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"Card to Location\"\r\n\t\t},\r\n\t\t//Aramex Custom Service Attributes\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2000, //AmazonCounter RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 2001, //AmazonLocker RequiresCustomData = false\r\n\t\t\t\"AttributeData\": \"\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "Sets a Service Type Alcohol Delivery",
+          "_postman_id": "4e69a290-c3ab-4f9a-9cf7-252614c1aaa9",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "/*\r\n//  Service Type - Alcohol Delivery\r\n//      Service Attributes - Signature Required\r\n                           - Package can be left in a safe place (Requires Custom Data)\r\n//                         - Capture Date of Birth\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{alcoholDeliveryServiceTypeId}},\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4,\r\n\t\t\t\"AttributeData\": \"ATL\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "Sets a Service Type Authority to Leave",
+          "_postman_id": "8db8c69c-9343-4b44-ab3b-e081b886fc58",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "/*\r\n//  Service Type - Authority to Leave\r\n//      Service Attributes - Package can be left in a safe place (Requires Custom Data)\r\n//                         - \r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{authorityToLeaveServiceTypeId}},\r\n\t\"Attributes\": [\r\n\t\t{\r\n\t\t\t\"ServiceAttributeId\": 4,\r\n\t\t\t\"AttributeData\": \"ATL\"\r\n\t\t}\r\n\t]\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "Sets a Service Type Signature Required",
+          "_postman_id": "570b2d2d-1df1-4c60-9475-8cf19f3b878d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "/*\r\n//  Service Type - Signature Required\r\n//      Service Attributes - Signature Required\r\n//                         - \r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{signatureRequiredServiceTypeId}}\r\n}\r\n",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "Sets a Service Type Standard Alcohol Authority To Leave",
+          "_postman_id": "b8cf111f-c29f-4abf-a271-156647a8b365",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "/*\r\n//  Service Type - Standard Alcholhol\r\n//      Service Attributes - Signature Required\r\n//\t\t\t\t\t\t   - Capture Date of Birth\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{alcoholDeliveryServiceTypeId}}\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        },
+        {
+          "name": "Sets a Service Type Amazon Counter",
+          "_postman_id": "95bdf145-d5d1-424c-86b8-060958818879",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true,
+            "disabledSystemHeaders": {
+              "accept": true
+            }
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "/*\r\n//  Service Type - Amazon Counter\r\n//      Service Attributes - Amazon Counter\r\n*/\r\n\r\n{\r\n\t\"ServiceTypeId\": {{amazonCounterServiceTypeId}}\r\n}",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{inboundAPIurl}}/Jobs/{{jobId}}/Packages/{{packageId}}/ServiceType"
+          },
+          "response": []
+        }
+      ],
+      "_postman_id": "c20398be-ad2c-4124-a19c-26df3be0c598"
+    },
+    {
+      "name": "Authenticate",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "6e8dfc6b-9010-4135-81b2-58ca83458dd7",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "id": "6ed56ea8-2526-48bb-b2c1-9c124dad2549",
+            "exec": [
+              "if (pm.test(\"Successful POST request\", function () {\r",
+              "\tpm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+              "})) { \r",
+              "\r",
+              "\tpm.test(\"Cookie BBAuthToken is present\", () => {\r",
+              "\t\tpm.expect(pm.cookies.has(\"BBAuthToken\")).to.be.true;\r",
+              "\t});\r",
+              "\r",
+              "\tconst addressFactory = (AddrLine1,AddrLine2,AddrLine3,AddrCity,AddrCountry,AddrLat,AddrLong,AddrPhone,AddrPostcode,AddrState,AddrEmail) => {\r",
+              "\t\treturn {\r",
+              "\t\t\tAddrLine1: AddrLine1,\r",
+              "\t\t\tAddrLine2: AddrLine2,\r",
+              "\t\t\tAddrLine3: AddrLine3,\r",
+              "\t\t\tAddrCity: AddrCity,\r",
+              "\t\t\tAddrCountry: AddrCountry,\r",
+              "\t\t\tAddrLat: AddrLat,\r",
+              "\t\t\tAddrLong: AddrLong,\r",
+              "\t\t\tAddrPhone: AddrPhone,\r",
+              "\t\t\tAddrPostcode: AddrPostcode,\r",
+              "\t\t\tAddrState: AddrState,\r",
+              "\t\t\tAddrEmail: AddrEmail,\r",
+              "\t\t};\r",
+              "\t};\r",
+              "\r",
+              "\tconst address0 = addressFactory('335 Lincoln Road','Addington','','Christchurch','New Zealand',3.542297,72.613342,'+6439777007','8024','Canterbury','michael.hamilton@e2open.com');\r",
+              "\tconst address1 = addressFactory('256 Barrington Street','Spreydon','','Christchurch','New Zealand',-43.55653,172.61902,'+6439777007','8024','Canterbury','michael.hamilton@e2open.com');\r",
+              "\tconst address2 = addressFactory('22 Riccarton Road','Riccarton','','Christchurch','New Zealand',-43.52864,172.60953,'+6439777007','8044','Canterbury','michael.hamilton@e2open.com');\r",
+              "\tconst address3 = addressFactory('368 Lincoln Road','Addington','','Christchurch','New Zealand',-43.542,172.61425,'+6439777007','8024','Canterbury','michael.hamilton@e2open.com');\r",
+              "\r",
+              "\tconst addresses = [];\r",
+              "\r",
+              "\taddresses.push(address0);\r",
+              "\taddresses.push(address1);\r",
+              "\taddresses.push(address2);\r",
+              "\taddresses.push(address3);\r",
+              "\r",
+              "\tpm.environment.set(\"addresses\",addresses);\r",
+              "\r",
+              "};"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "c23244ac-83b5-4372-9df5-61594b320994",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true,
+        "disabledSystemHeaders": {
+          "accept": true
+        }
+      },
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\t\"Username\": \"{{username}}\",\r\n\t\"Password\": \"{{password}}\",\r\n\t\"LocaleId\": 0,\r\n\t\"LocaleLCID\": 0\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{inboundAPIurl}}/Authentication"
+      },
+      "response": []
+    },
+    {
+      "name": "Logout",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "64772690-db00-4b00-8ac1-d4365d5dc194",
+            "exec": [
+              "pm.environment.unset(\"jobId\");\r",
+              "pm.environment.unset(\"jobExternalId\");\r",
+              "pm.environment.unset(\"tskExternalId\");\r",
+              "pm.environment.unset(\"packageActionsSequenceId\");\r",
+              "pm.environment.unset(\"packageId\");\r",
+              "pm.environment.unset(\"timeStamp\");\r",
+              "pm.environment.unset(\"barcode\");\r",
+              "\r",
+              "pm.environment.unset(\"addresses\");"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "id": "4abdad82-cfaa-4f96-8de3-949d944abfe0",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "0d98c9db-5798-4486-9526-a9230913c7fd",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true,
+        "disabledSystemHeaders": {
+          "accept": true,
+          "accept-encoding": true
+        }
+      },
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {}
+          }
+        },
+        "url": "{{inboundAPIurl}}/Authentication/Logout"
+      },
+      "response": []
+    }
+  ]
+}
